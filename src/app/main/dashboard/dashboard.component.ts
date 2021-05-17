@@ -2,9 +2,11 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouteComponentBase } from 'src/app/core/route-component-base';
-import { MainService } from '../service/main.service';
-import * as moment from 'moment';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { Forecast } from '../model/forecast.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ForecastDialogComponent } from '../forecast-dialog/forecast-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,25 +14,33 @@ import { Forecast } from '../model/forecast.model';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent extends RouteComponentBase {
+  cityName: string = 'Agra';
+  form = new FormGroup({});
+  emitCityNameToChild: Subject<string> = new Subject<string>();
+
   constructor(
     protected readonly route: ActivatedRoute,
     protected readonly location: Location,
-    private readonly mainService: MainService
+    private readonly formBuilder: FormBuilder,
+    private readonly dialog: MatDialog
   ) {
     super(route, location);
   }
-  forecastList: Forecast[] = [];
 
   ngOnInit() {
     super.ngOnInit();
-    this.getWeatherForecastByCityId();
+    this.form = this.formBuilder.group({
+      cityName: [''],
+    });
   }
 
-  getWeatherForecastByCityId() {
-    this._subscriptions.push(
-      this.mainService.getDataByCityName('Agra').subscribe((resp) => {
-        this.forecastList = resp;
-      })
-    );
+  getCityForecast() {
+    this.emitCityNameToChild.next(this.form.value.cityName);
+  }
+
+  showForecastInfo(data: Forecast) {
+    this.dialog.open(ForecastDialogComponent, {
+      data: data,
+    });
   }
 }

@@ -1,0 +1,19 @@
+<div *ngFor="let day of forecastList">
+    <div class="main">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>{{ day.dayName }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="{{ day.weatherImgUrl }}" alt="Weather">
+            <mat-card-content>
+                <p>Morning Temperature: {{ day.morningTemp }}</p>
+                <p>Day Temperature: {{ day.dayTemp }}</p>
+                <p>Night Temperature: {{ day.nightTemp }}</p>
+                <p>Humidity: {{ day.humidity }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <mat-icon matTooltip="Forecast Stats" (click)="onClickInfo(day)">info</mat-icon>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

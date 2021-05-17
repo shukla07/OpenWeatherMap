@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Forecast data for {{ data.dayName }}</h1>
+<div mat-dialog-content>
+    <p>Maximum Temperature Value: {{ data.foreCastInfo.maxValue }}</p>
+    <p>Minimum Temperature Value: {{ data.foreCastInfo.minValue }}</p>
+    <p>Mean Temperature Value: {{ data.foreCastInfo.meanValue }}</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onClickClose()">Close</button>
+</div>

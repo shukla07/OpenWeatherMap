@@ -5,6 +5,7 @@ export class Forecast {
   humidity: string = 'Not Available';
   dayName: string = 'Not Available';
   foreCastInfo: ForecastInfo;
+  weatherImgUrl: string = 'assets/clear-weather.jpg';
 
   constructor() {
     this.foreCastInfo = new ForecastInfo();
